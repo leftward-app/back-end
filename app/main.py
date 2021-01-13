@@ -38,6 +38,7 @@ def exception_log_handler(func):
         try:
             return func(*args, **kwargs)
         except Exception as e:
+            print(e)
             log.error(e)
             return
     wrapper.__name__ = func.__name__
@@ -186,9 +187,9 @@ def derive_curated_actions(guid):
     actions_to_deactivate = []
     for action in actions:
         if action['active']:
-            if action['expireDT'] < datetime.now() or \
-                    action['firstPresentedDT'] < datetime.now() - timedelta(days=14) or \
-                    action['status']:
+    #         action['expireDT'] < datetime.now() or \
+    #                action['firstPresentedDT'] < datetime.now() - timedelta(days=14) or \
+             if action['status']:
                 actions_to_deactivate.append(action['actionId'])
                 action['active'] = 0
     if actions_to_deactivate:
